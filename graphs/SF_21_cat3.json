@@ -1,0 +1,233 @@
+{
+  "diagram": {
+    "metadata": {
+      "name": "Safely Limited Speed (SLS) for Inching Mode",
+      "description": "Electrical schematic implementing a Safely Limited Speed (SLS) function in inching mode using a safety PLC, redundant guard switches, and dual encoder feedback. Category 3 / PL d according to EN ISO 13849-1.",
+      "category": "3",
+      "source_url": "SF_12_cat3.png"
+    },
+    "elements": [
+      {
+        "id": "B1",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "name": "B1 Guard switch channel 1",
+        "category": "3",
+        "symbol": "NC",
+        "description": "First safety guard switch contact with mechanical contact guidance, providing one input channel to the Safety PLC.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "B2",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "name": "B2 Guard switch channel 2",
+        "category": "3",
+        "symbol": "NO",
+        "description": "Second safety guard switch contact with mechanical contact guidance, providing redundant input to the Safety PLC.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "S1",
+        "type": "PushButton",
+        "IO": "Input",
+        "name": "S1 Inching pushbutton",
+        "category": "3",
+        "symbol": "NO",
+        "description": "Pushbutton used to enable manual inching mode under safely limited speed conditions.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "K1",
+        "type": "Safety PLC",
+        "IO": "Logic",
+        "name": "K1 Safety PLC",
+        "category": "3",
+        "symbol": "",
+        "description": "Safety PLC executing SLS logic: compares desired/actual speeds (n_desired, n_actual1, n_actual2), monitors guard and inching inputs, and controls inverter enable/disable outputs.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "Q1",
+        "type": "Contactor",
+        "IO": "Output",
+        "name": "Q1 Contactor",
+        "category": "3",
+        "symbol": "",
+        "description": "Main contactor controlled by Safety PLC output to enable power to the inverter during inching mode.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "T1",
+        "type": "FrequencyInverter",
+        "IO": "Output",
+        "name": "T1 Frequency inverter",
+        "category": "3",
+        "symbol": "",
+        "description": "Frequency inverter with inputs for Start/Stop, Pulse blocking, and speed feedback signals; supervised by the Safety PLC for safe limited speed function.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "M1",
+        "type": "Motor",
+        "IO": "EndEffector",
+        "name": "M1 3~",
+        "category": "3",
+        "symbol": "",
+        "description": "Three-phase motor driven by frequency inverter, operating in safely limited speed (SLS) mode during inching operation.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "G1",
+        "type": "Encoder",
+        "IO": "Input",
+        "name": "G1 Encoder channel 1 (n1_actual)",
+        "category": "3",
+        "symbol": "",
+        "description": "First encoder providing actual speed feedback (n1_actual) to the Safety PLC for SLS monitoring.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "G2",
+        "type": "Encoder",
+        "IO": "Input",
+        "name": "G2 Encoder channel 2 (n2_actual)",
+        "category": "3",
+        "symbol": "",
+        "description": "Second redundant encoder providing independent speed feedback (n2_actual) to the Safety PLC for comparison and diagnostic coverage.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "L",
+        "type": "PowerSupply",
+        "IO": "EndEffector",
+        "name": "L",
+        "category": "3",
+        "symbol": "L",
+        "description": "Three-phase mains supply providing power to the inverter and motor circuit.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      },
+      {
+        "id": "+UB",
+        "type": "DC_Supply",
+        "IO": "EndEffector",
+        "name": "+Ub",
+        "category": "3",
+        "symbol": "+Ub",
+        "description": "24V DC control voltage for the Safety PLC, contactor, and sensors.",
+        "mf_model": {
+          "manufacturer": "",
+          "model": "",
+          "dtr_link": ""
+        }
+      }
+    ],
+    "connections": [
+      {
+        "from": "B1",
+        "to": "K1",
+        "type": "input"
+      },
+      {
+        "from": "B2",
+        "to": "K1",
+        "type": "input"
+      },
+      {
+        "from": "S1",
+        "to": "K1",
+        "type": "input"
+      },
+      {
+        "from": "G1",
+        "to": "K1",
+        "type": "feedback"
+      },
+      {
+        "from": "G2",
+        "to": "K1",
+        "type": "feedback"
+      },
+      {
+        "from": "K1",
+        "to": "Q1",
+        "type": "output"
+      },
+      {
+        "from": "K1",
+        "to": "T1",
+        "type": "output"
+      },
+      {
+        "from": "L",
+        "to": "Q1",
+        "type": "power"
+      },
+      {
+        "from": "Q1",
+        "to": "T1",
+        "type": "power"
+      },
+      {
+        "from": "T1",
+        "to": "M1",
+        "type": "power"
+      },
+      {
+        "from": "+UB",
+        "to": "K1",
+        "type": "power"
+      },
+      {
+        "from": "+UB",
+        "to": "B1",
+        "type": "control"
+      },
+      {
+        "from": "+UB",
+        "to": "B2",
+        "type": "control"
+      }
+    ]
+  }
+}

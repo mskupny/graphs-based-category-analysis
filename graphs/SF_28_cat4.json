@@ -1,0 +1,208 @@
+{
+  "diagram": {
+    "metadata": {
+      "name": "SF_28 — Dual Safety Guards with Monitored Outputs (Cat.4)",
+      "description": "Two dual-channel guard switches (B1, B2) monitored by a Safety Module K1 and PLC K3. Redundant output contactors Q1 and Q2 with feedback via K2 and cross-monitoring loops. Achieves Category 4 with redundancy and feedback at all stages.",
+      "category": "4",
+      "source_url": "SF_28_cat4.png"
+    },
+    "elements": [
+      {
+        "id": "B1.1",
+        "name": "Safety Guard 1 Channel 1",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "category": "Input",
+        "description": "Guard 1 channel 1 (normally closed). Opens when door 1 opens."
+      },
+      {
+        "id": "B1.2",
+        "name": "Safety Guard 1 Channel 2",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "category": "Input",
+        "description": "Guard 1 channel 2 (redundant)."
+      },
+      {
+        "id": "B2.1",
+        "name": "Safety Guard 2 Channel 1",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "category": "Input",
+        "description": "Guard 2 channel 1 (normally closed)."
+      },
+      {
+        "id": "B2.2",
+        "name": "Safety Guard 2 Channel 2",
+        "type": "LimitSwitch, mechanical contact guidance",
+        "IO": "Input",
+        "category": "Input",
+        "description": "Guard 2 channel 2 (redundant)."
+      },
+      {
+        "id": "K1",
+        "name": "Safety Module",
+        "type": "SafetyRelayModule",
+        "IO": "Logic",
+        "category": "Logic",
+        "description": "Dual-channel safety module combining inputs from both guards and controlling redundant contactors."
+      },
+      {
+        "id": "K2",
+        "name": "Contactor Relay (Cross-monitor)",
+        "type": "Contactor",
+        "IO": "Logic",
+        "category": "Logic",
+        "description": "Cross-monitoring relay for feedback and redundancy verification."
+      },
+      {
+        "id": "K3",
+        "name": "PLC",
+        "type": "Logic Controller",
+        "IO": "Logic",
+        "category": "Logic",
+        "description": "PLC receiving guard status signals from K1 and providing release command."
+      },
+      {
+        "id": "Q1",
+        "name": "Contactor 1",
+        "type": "Contactor",
+        "IO": "Output",
+        "category": "Output",
+        "description": "First redundant contactor controlled by safety module K1."
+      },
+      {
+        "id": "Q2",
+        "name": "Contactor 2",
+        "type": "Contactor",
+        "IO": "Output",
+        "category": "Output",
+        "description": "Second redundant contactor controlled by safety module K1."
+      },
+      {
+        "id": "M1",
+        "name": "Motor",
+        "type": "Motor",
+        "IO": "EndEffector",
+        "category": "End",
+        "description": "Three-phase motor powered via redundant contactors Q1 and Q2."
+      },
+      {
+        "id": "L",
+        "name": "Power Supply",
+        "type": "Power",
+        "IO": "EndEffector",
+        "category": "Supply",
+        "description": "Three-phase mains supply."
+      }
+    ],
+
+    "connections": [
+      {
+        "from": "B1.1",
+        "to": "K1",
+        "type": "safety_input"
+      },
+      {
+        "from": "B1.2",
+        "to": "K1",
+        "type": "safety_input"
+      },
+      {
+        "from": "B2.1",
+        "to": "K1",
+        "type": "safety_input"
+      },
+      {
+        "from": "B2.2",
+        "to": "K1",
+        "type": "safety_input"
+      },
+      {
+        "from": "K1",
+        "to": "K2",
+        "type": "safety_output"
+      },
+      {
+        "from": "K1",
+        "to": "Q1",
+        "type": "safety_output"
+      },
+      {
+        "from": "K1",
+        "to": "Q2",
+        "type": "safety_output"
+      },
+      {
+        "from": "L",
+        "to": "Q1",
+        "type": "power"
+      },
+      {
+        "from": "Q1",
+        "to": "Q2",
+        "type": "power"
+      },
+      {
+        "from": "Q2",
+        "to": "M1",
+        "type": "power"
+      },
+      {
+        "from": "Q1",
+        "to": "K1",
+        "type": "feedback"
+      },
+      {
+        "from": "Q2",
+        "to": "K1",
+        "type": "feedback"
+      },
+      {
+        "from": "K2",
+        "to": "K1",
+        "type": "feedback"
+      },
+      {
+        "from": "Q1",
+        "to": "K2",
+        "type": "feedback"
+      },
+      {
+        "from": "Q2",
+        "to": "K2",
+        "type": "feedback"
+      },
+      {
+        "from": "B1.1",
+        "to": "K3",
+        "type": "input"
+      },
+      {
+        "from": "B1.2",
+        "to": "K3",
+        "type": "input"
+      },
+      {
+        "from": "B2.1",
+        "to": "K3",
+        "type": "input"
+      },
+      {
+        "from": "B2.2",
+        "to": "K3",
+        "type": "input"
+      },
+      {
+        "from": "K3",
+        "to": "K2",
+        "type": "output"
+      },
+      {
+        "from": "K1",
+        "to": "K3",
+        "type": "safety_output"
+      }
+    ]
+  }
+}

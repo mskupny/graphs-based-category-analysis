@@ -1,0 +1,55 @@
+{
+  "diagram": {
+    "elements": [
+      {
+        "id": "B1",
+        "name": "B1",
+        "type": "Limit Switch (door)",
+        "IO": "Input",
+        "category": "",
+        "description": "Safety input – gate or guard switch detecting open/closed position"
+      },
+      {
+        "id": "Q1",
+        "name": "Q1",
+        "type": "Contactor",
+        "IO": "Output",
+        "category": "",
+        "description": "Main contactor coil controlling motor power"
+      },
+      {
+        "id": "M1",
+        "name": "M1",
+        "type": "Motor 3~",
+        "IO": "EndEffector",
+        "category": "",
+        "description": "Three-phase motor controlled by Q1"
+      },
+      {
+        "id": "L",
+        "name": "L",
+        "type": "Supply",
+        "IO": "EndEffector",
+        "category": "",
+        "description": "Three-phase line supply"
+      }
+    ],
+    "connections": [
+      {
+        "from": "B1",
+        "to": "Q1",
+        "type": "control"
+      },
+      {
+        "from": "Q1",
+        "to": "M1",
+        "type": "power"
+      },
+      {
+        "from": "L",
+        "to": "Q1",
+        "type": "power"
+      }
+    ]
+  }
+}

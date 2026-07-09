@@ -1,0 +1,92 @@
+{
+  "diagram": {
+    "metadata": {
+      "name": "Motor Starter Undervoltage Protection",
+      "description": "Simple control circuit for motor starter with undervoltage release",
+      "category":  "B",
+      "source_url": "SF_01_catB.png"
+    },
+    "elements": [
+      {
+        "id": "B1",
+        "type": "PushButton",
+        "IO":  "Input",
+        "name": "Start button",
+        "category": "B",
+        "symbol": "",
+        "description": "Normally open pushbutton used to start the motor circuit.",
+        "mf_model": {
+          "manufacturer": "Siemens",
+          "model": "3SB3000-0AA21",
+          "dtr_link": "https://support.industry.siemens.com/cs/document/3sb3000-0aa21"
+        }
+      },
+      {
+        "id": "Q1",
+        "type": "UndervoltageRelease-Contractor",
+        "IO": "Output",
+        "name": "Q1 <U",
+        "category": "1",
+        "symbol": "<U",
+        "description": "Undervoltage release relay that de-energizes the motor starter when supply voltage drops below threshold.",
+        "mf_model": {
+          "manufacturer": "Schneider Electric",
+          "model": "GV2-AE11",
+          "dtr_link": "https://www.se.com/ww/en/product/GV2-AE11/"
+        }
+      },
+      {
+        "id": "M1",
+        "type": "Motor",
+        "IO": "EndEffector",
+        "name": "M1 3~",
+        "symbol": "",
+        "description": "Three-phase motor load.",
+        "mf_model": {
+          "manufacturer": "SEW-Eurodrive",
+          "model": "DRN90M4",
+          "dtr_link": "https://download.sew-eurodrive.com/download/pdf/DRN90M4.pdf"
+        }
+      },
+      {
+        "id": "L",
+        "type": "PowerSupply",
+        "IO": "EndEffector",
+        "name": "L",
+        "symbol": "L",
+        "description": "Three-phase power supply.",
+        "mf_model": {
+          "manufacturer": "ABB",
+          "model": "System 400V 3~",
+          "dtr_link": ""
+        }
+      }
+    ],
+    "connections": [
+      {
+        "from": "L",
+        "to": "MotorStarter",
+        "type": "power"
+      },
+
+      {
+        "from": "MotorStarter",
+        "to": "M1",
+        "type": "power"
+      },
+
+      {
+        "from": "B1",
+        "to": "Q1",
+        "type": "control"
+      },
+
+      {
+        "from": "Q1",
+        "to": "MotorStarter",
+        "type": "control"
+      }
+
+    ]
+  }
+}

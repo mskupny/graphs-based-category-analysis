@@ -1,0 +1,87 @@
+{
+  "diagram": {
+    "elements": [
+      {
+        "id": "S1",
+        "name": "S1",
+        "type": "Emergency Stop (NC)",
+        "IO": "Input",
+        "category": "",
+        "description": "Emergency stop pushbutton – normally closed, opens circuit when pressed"
+      },
+      {
+        "id": "S2",
+        "name": "S2",
+        "type": "Start Button (NO)",
+        "IO": "Input",
+        "category": "",
+        "description": "Start pushbutton – normally open, closes to energize Q1"
+      },
+      {
+        "id": "S3",
+        "name": "S3",
+        "type": "Stop Button (NC)",
+        "IO": "Input",
+        "category": "",
+        "description": "Stop pushbutton – normally closed, opens to de-energize Q1"
+      },
+      {
+        "id": "Q1",
+        "name": "Q1",
+        "type": "Contactor (with holding contact)",
+        "IO": "Output",
+        "category": "",
+        "description": "Main contactor coil controlling motor; includes self-holding contact in control circuit"
+      },
+      {
+        "id": "M1",
+        "name": "M1",
+        "type": "Motor 3~",
+        "IO": "EndEffector",
+        "category": "",
+        "description": "Three-phase motor driven via Q1"
+      },
+      {
+        "id": "L",
+        "name": "L",
+        "type": "Power Supply",
+        "IO": "EndEffector",
+        "category": "",
+        "description": "Line supply for power circuit"
+      }
+    ],
+    "connections": [
+      {
+        "from": "S1",
+        "to": "S2",
+        "type": "control"
+      },
+      {
+        "from": "S2",
+        "to": "S3",
+        "type": "control"
+      },
+      {
+        "from": "S3",
+        "to": "Q1",
+        "type": "control"
+      },
+      {
+        "from": "Q1",
+        "to": "S2",
+        "type": "control",
+        "description": "Self-holding auxiliary contact of Q1"
+      },
+      {
+        "from": "L",
+        "to": "Q1",
+        "type": "power"
+      },
+      {
+        "from": "Q1",
+        "to": "M1",
+        "type": "power"
+      }
+    ]
+  }
+}
